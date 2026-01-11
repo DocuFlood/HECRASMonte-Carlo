@@ -65,21 +65,4 @@ This stage ensures that the workflow starts from a clean state and that all
 user-defined inputs (model files, parameter files, and output directories)
 exist and are accessible.
 
-**Pseudo-Code**
-```text
-BEGIN WORKFLOW
 
-1. Initialization
-   - Clear cached variables and release memory
-   - Load user-defined configuration parameters
-   - Verify existence of:
-       • HEC-RAS project files
-       • Land-cover datasets
-       • Hydrograph input files
-       • Output directories
-
-
-   - Validate number of roughness classes
-   - Open land-cover dataset
-   - Replace existing Manning’s n-values
-   - Save and close dataset
