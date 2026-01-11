@@ -77,3 +77,26 @@ BEGIN WORKFLOW
        • Land-cover datasets
        • Hydrograph input files
        • Output directories
+
+---
+
+### **Stage 2 – Update Manning’s Roughness Coefficients**
+
+**Purpose**  
+Systematically modify spatial roughness parameters to represent uncertainty in
+land-surface characteristics.
+
+**Description**  
+Manning’s roughness coefficients are read from an external file and used to
+replace existing values in the land-cover dataset associated with the HEC-RAS
+model. This enables rapid testing of multiple roughness scenarios without
+manually editing the hydraulic model.
+
+**Pseudo-Code**
+```text
+2. Update Manning’s Roughness Coefficients
+   - Read updated Manning’s n-values from external file
+   - Validate number of roughness classes
+   - Open land-cover dataset
+   - Replace existing Manning’s n-values
+   - Save and close dataset
