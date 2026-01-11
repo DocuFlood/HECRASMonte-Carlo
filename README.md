@@ -18,4 +18,4 @@ associated manuscript.
 
 This repository is intended for researchers and practitioners in
 hydrology and hydraulic modelling who wish to understand or re-implement
-the methodology without direct access to the original source code.
+the methodology for automation of HEC-RAS and applying a Monte Carlo approach. 
