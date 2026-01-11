@@ -20,7 +20,7 @@ application programming interfaces (APIs).
 Python enables:
 - Rapid automation of repetitive modelling tasks
 - Structured handling of large numerical datasets
-- Integration with external simulation engines such as HEC-RAS
+- Integration with external simulation engines i.e., HEC-RAS
 
 ---
 
