@@ -65,4 +65,63 @@ This stage ensures that the workflow starts from a clean state and that all
 user-defined inputs (model files, parameter files, and output directories)
 exist and are accessible.
 
+### **Stage 2 — Update Manning’s Roughness Coefficients
 
+**Purpose** 
+Systematically modify spatial roughness parameters to represent uncertainty in
+land-surface characteristics.
+
+**Description**
+Manning’s roughness coefficients are read from an external file and used to
+replace existing values in the land-cover dataset associated with the HEC-RAS
+model. This enables rapid testing of multiple roughness scenarios without
+manually editing the model.
+
+### **Stage 3 — Update Inflow Hydrographs**
+
+**Purpose**  
+Introduce variability in boundary conditions by modifying inflow hydrographs.
+
+**Description** 
+Each unsteady flow file is updated by replacing its hydrograph values with new
+values supplied externally. The original file structure and formatting are
+preserved to ensure compatibility with HEC-RAS.
+
+### **Stage 4 — Execute Hydraulic Simulations**
+
+**Purpose**  
+Automate the execution of multiple HEC-RAS simulations efficiently.
+
+**Description** 
+Each HEC-RAS project is opened and executed automatically. Simulation progress
+is monitored until completion, after which results are saved. When multiple
+projects are provided, simulations may be executed in parallel.
+
+### **Stage 5 — Extract Flow Time Series**
+
+**Purpose**  
+Post-process simulation results to obtain discharge time series.
+
+**Description** 
+Flow results are extracted from HEC-RAS HDF output files. Time vectors are
+constructed using simulation metadata, and results are exported for further
+analysis and visualization.
+
+### **Stage 6 — Extract Water Surface Elevation and Depth**
+
+**Purpose**  
+Analyze hydraulic responses at selected spatial locations.
+
+**Description** 
+Water surface elevation is extracted for user-defined computational cells.
+Water depth is computed relative to initial conditions, enabling assessment
+of temporal variations in inundation depth.
+
+### **Stage 7 — Finalization**
+
+**Purpose**  
+Ensure a clean and stable workflow termination.
+
+**Description** 
+All open files are closed and system resources are released, allowing the
+workflow to be repeated reliably for additional Monte Carlo realizations.
