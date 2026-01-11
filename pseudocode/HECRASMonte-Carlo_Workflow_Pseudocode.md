@@ -1,126 +1,138 @@
-# AutoRamtin: Detailed Pseudo-Code and Algorithmic Description
+Algorithm: HECRASMonte-Carlo Workflow
+Stage 1 — Initialization and Configuration
 
-## 1. Purpose of the Workflow
+Purpose:
+Prepare the computational environment and verify that all required inputs are
+available before modifying the hydraulic model.
 
-The AutoRamtin workflow is designed to automate parameter modification,
-execution, and post-processing of pre-configured HEC-RAS unsteady flow models.
-The workflow supports sensitivity and uncertainty analysis, including
-Monte Carlo–based experiments, by systematically modifying model inputs and
-extracting hydraulic outputs.
+Description:
+This stage ensures that the workflow starts from a clean state and that all
+user-defined inputs (model files, parameter files, and output directories)
+exist and are accessible.
 
-This document provides a language-independent pseudo-code description of the
-workflow, enabling independent re-implementation without access to the
-original source code.
-
----
-
-## 2. Assumptions
-
-- A valid HEC-RAS model (geometry, boundary conditions, and plans) already exists
-- Manning’s roughness coefficients are stored in a land-cover dataset
-- Inflow hydrographs are defined in unsteady flow input files
-- Simulation outputs are stored in HEC-RAS HDF result files
-- Time step and simulation duration are predefined in the HEC-RAS model
-
----
-
-## 3. Inputs
-
-- One or more HEC-RAS project files
-- Land-cover dataset containing Manning’s roughness coefficients
-- External file with updated Manning’s n-values
-- Unsteady flow files containing inflow hydrographs
-- External files with updated hydrograph values
-- Simulation start and end times
-- Output directory for exported results
-
----
-
-## 4. Outputs
-
-- Updated HEC-RAS model input files
-- Completed HEC-RAS simulations
-- Time series of flow, water surface elevation, and water depth
-- Exported plots and tabular data
-
----
-
-## 5. Pseudo-Code Description
-
-### Algorithm: AutoRamtin Workflow
+Pseudo-Code:
 
 BEGIN WORKFLOW
 
-Initialization
+1. Initialization
+   - Clear cached variables and release memory
+   - Load user-defined configuration parameters
+   - Verify existence of:
+       • HEC-RAS project files
+       • Land-cover datasets
+       • Hydrograph input files
+       • Output directories
+     
+Stage 2 — Update Manning’s Roughness Coefficients
 
-Reset variables and clear memory
+Purpose:
+Systematically modify spatial roughness parameters to represent uncertainty in
+land-surface characteristics.
 
-Load configuration parameters
+Description:
+Manning’s roughness coefficients are read from an external file and used to
+replace existing values in the land-cover dataset associated with the HEC-RAS
+model. This enables rapid testing of multiple roughness scenarios without
+manually editing the model.
 
-Verify existence of required input files
+2. Update Manning’s Roughness Coefficients
+   - Read updated Manning’s n-values from external file
+   - Validate number of roughness classes
+   - Open land-cover dataset
+   - Replace existing Manning’s n-values
+   - Save and close dataset
 
-Update Manning’s Roughness Coefficients
+Stage 3 — Update Inflow Hydrographs
 
-Read updated Manning’s n-values from external file
+Purpose:
+Introduce variability in boundary conditions by modifying inflow hydrographs.
 
-Validate number of roughness classes
+Description:
+Each unsteady flow file is updated by replacing its hydrograph values with new
+values supplied externally. The workflow preserves the original file structure
+and formatting to ensure compatibility with HEC-RAS.
 
-Open land-cover dataset
+3. Update Inflow Hydrographs
+   FOR each unsteady flow input file:
+       - Read updated hydrograph values
+       - Identify hydrograph section boundaries
+       - Replace existing values while preserving file structure
+       - Save updated unsteady flow file
+   END FOR
 
-Replace existing Manning’s n-values
+Stage 4 — Execute Hydraulic Simulations
 
-Save and close dataset
+Purpose:
+Automate the execution of multiple HEC-RAS simulations efficiently.
 
-Update Inflow Hydrographs
-FOR each unsteady flow input file:
-- Read updated hydrograph values
-- Identify hydrograph section boundaries
-- Replace existing values while preserving file structure
-- Save updated unsteady flow file
-END FOR
+Description:
+Each HEC-RAS project is opened and executed automatically. Simulation progress
+is monitored until completion, after which results are saved. When multiple
+projects are provided, simulations may be executed in parallel to reduce
+computational time.
 
-Execute Hydraulic Simulations
-FOR each HEC-RAS project file:
-- Open project
-- Execute current simulation plan
-- Monitor simulation until completion
-- Save project and results
-- Close HEC-RAS instance
-END FOR
-(Simulations may be executed in parallel)
+4. Execute Hydraulic Simulations
+   FOR each HEC-RAS project file:
+       - Open project
+       - Execute current simulation plan
+       - Monitor simulation until completion
+       - Save project and results
+       - Close HEC-RAS instance
+   END FOR
+   (Simulations may be executed in parallel)
 
-Extract Flow Time Series
-FOR each simulation output file:
-- Read flow dataset from HDF output
-- Construct time vector from simulation settings
-- Align data lengths
-- Generate flow plots
-- Export flow time series to text files
-END FOR
+Stage 5 — Extract Flow Time Series
 
-Extract Water Surface Elevation and Depth
-FOR each simulation output file:
-- Read water surface elevation dataset
-- Select user-defined computational cell
-- Extract water surface time series
-- Compute water depth relative to initial condition
-- Generate plots
-- Export results to text files
-END FOR
+Purpose:
+Post-process simulation results to obtain discharge time series.
 
-Finalization
+Description:
+Flow results are extracted from HEC-RAS HDF output files. Time vectors are
+constructed using simulation metadata, and results are exported for further
+analysis and visualization.
 
-Close all open files
+5. Extract Flow Time Series
+   FOR each simulation output file:
+       - Read flow dataset from HDF output
+       - Construct time vector from simulation settings
+       - Align data lengths
+       - Generate flow plots
+       - Export flow time series to text files
+   END FOR
+   
+Stage 6 — Extract Water Surface Elevation and Depth
 
-Release system resources
+Purpose:
+Analyze spatially explicit hydraulic responses at selected locations.
+
+Description:
+Water surface elevation is extracted for user-defined computational cells.
+Water depth is computed relative to initial conditions, enabling assessment of
+temporal variations in inundation depth.
+
+Pseudo-Code:
+6. Extract Water Surface Elevation and Depth
+   FOR each simulation output file:
+       - Read water surface elevation dataset
+       - Select user-defined computational cell
+       - Extract water surface time series
+       - Compute water depth relative to initial condition
+       - Generate plots
+       - Export results to text files
+   END FOR
+   
+Stage 7 — Finalization
+
+Purpose:
+Ensure a clean and stable workflow termination.
+
+Description:
+All open files are closed and system resources are released, allowing the
+workflow to be repeated reliably for additional Monte Carlo realizations.
+
+7. Finalization
+   - Close all open files
+   - Release system resources
 
 END WORKFLOW
 
-
----
-
-## 6. Reproducibility Statement
-
-This pseudo-code provides a complete, language-independent description of the
-AutoRamtin workflow. While implementation details may vary, the algorithmic
-structure described here is sufficient to enable independent re-implementation.
