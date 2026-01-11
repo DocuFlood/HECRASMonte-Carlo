@@ -76,7 +76,13 @@ BEGIN WORKFLOW
        • Land-cover datasets
        • Hydrograph input files
        • Output directories
+
 ---
+
+## 🔑 **WHAT WAS FIXED (IMPORTANT)**
+
+### 1️⃣ You were missing the **closing code fence**
+This line was missing before:
 
 ### **Stage 2 — Update Manning’s Roughness Coefficients**
 
