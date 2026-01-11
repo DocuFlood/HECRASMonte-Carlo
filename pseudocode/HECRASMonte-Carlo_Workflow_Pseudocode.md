@@ -127,7 +127,7 @@ Automate the execution of multiple HEC-RAS simulations efficiently.
 **Description** 
 Each HEC-RAS project is opened and executed automatically. Simulation progress
 is monitored until completion, after which results are saved. When multiple
-projects are provided, simulations may be executed in parallel.
+projects are provided, simulations are executed in parallel.
 
 **Pseudo-Code**
 ```text
@@ -139,7 +139,7 @@ projects are provided, simulations may be executed in parallel.
        - Save project and results
        - Close HEC-RAS instance
    END FOR
-   (Simulations may be executed in parallel)
+   (Simulations are executed in parallel)
 ```
 ### **Stage 5 — Extract Flow Time Series**
 
@@ -197,7 +197,7 @@ workflow to be repeated reliably for additional Monte Carlo realizations.
 
 **Pseudo-Code**
 ```text
-7. Finalization
+7. Finalisation
    - Close all open files
    - Release system resources
 
