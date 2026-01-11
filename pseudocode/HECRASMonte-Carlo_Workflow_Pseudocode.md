@@ -186,7 +186,7 @@ Water depth is computed relative to initial conditions, enabling assessment
 ```
 of temporal variations in inundation depth.
 
-### **Stage 7 — Finalization**
+### **Stage 7 — Finalisation**
 
 **Purpose**  
 Ensure a clean and stable workflow termination.
