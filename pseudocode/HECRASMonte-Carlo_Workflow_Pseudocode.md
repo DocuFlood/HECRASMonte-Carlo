@@ -65,7 +65,7 @@ This stage ensures that the workflow starts from a clean state and that all
 user-defined inputs (model files, parameter files, and output directories)
 exist and are accessible.
 
-### **Stage 2 — Update Manning’s Roughness Coefficients
+### **Stage 2 — Update Manning’s Roughness Coefficients**
 
 **Purpose** 
 Systematically modify spatial roughness parameters to represent uncertainty in
