@@ -17,5 +17,5 @@ associated manuscript.
 ## Intended Use
 
 This repository is intended for researchers and practitioners in
-hydrology and hydraulic modelling who wish to understand or re-implement
+hydrology and hydraulic modelling who wish to understand 
 the methodology for automation of HEC-RAS and applying a Monte Carlo approach. 
