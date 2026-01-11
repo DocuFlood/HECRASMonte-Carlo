@@ -54,7 +54,7 @@ the original source code.
 
 ---
 
-### **Stage 1 — Initialization and Configuration**
+### **Stage 1 — Initialisation and Configuration**
 
 **Purpose**  
 Prepare the computational environment and verify that all required inputs are
@@ -69,7 +69,7 @@ exist and are accessible.
 ```text
 BEGIN WORKFLOW
 
-1. Initialization
+1. Initialisation
    - Clear cached variables and release memory
    - Load user-defined configuration parameters
    - Verify existence of:
