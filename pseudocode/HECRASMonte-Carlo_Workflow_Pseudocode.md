@@ -64,6 +64,7 @@ available before modifying the hydraulic model.
 This stage ensures that the workflow starts from a clean state and that all
 user-defined inputs (model files, parameter files, and output directories)
 exist and are accessible.
+
 **Pseudo-Code**
 ```text
 BEGIN WORKFLOW
@@ -77,12 +78,6 @@ BEGIN WORKFLOW
        • Hydrograph input files
        • Output directories
 
----
-
-## 🔑 **WHAT WAS FIXED (IMPORTANT)**
-
-### 1️⃣ You were missing the **closing code fence**
-This line was missing before:
 
 ### **Stage 2 — Update Manning’s Roughness Coefficients**
 
