@@ -79,7 +79,6 @@ BEGIN WORKFLOW
        • Output directories
 
 ```
-
 ### **Stage 2 — Update Manning’s Roughness Coefficients**
 
 **Purpose** 
@@ -102,7 +101,6 @@ manually editing the model.
    - Save and close dataset
 
 ```
-
 ### **Stage 3 — Update Inflow Hydrographs**
 
 **Purpose**  
