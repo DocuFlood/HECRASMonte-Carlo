@@ -77,7 +77,6 @@ BEGIN WORKFLOW
        • Land-cover datasets
        • Hydrograph input files
        • Output directories
-
 ```
 ### **Stage 2 — Update Manning’s Roughness Coefficients**
 
@@ -99,7 +98,6 @@ manually editing the model.
    - Open land-cover dataset
    - Replace existing Manning’s n-values
    - Save and close dataset
-
 ```
 ### **Stage 3 — Update Inflow Hydrographs**
 
@@ -111,6 +109,16 @@ Each unsteady flow file is updated by replacing its hydrograph values with new
 values supplied externally. The original file structure and formatting are
 preserved to ensure compatibility with HEC-RAS.
 
+**Pseudo-Code**
+```text
+3. Update Inflow Hydrographs
+   FOR each unsteady flow input file:
+       - Read updated hydrograph values
+       - Identify hydrograph section boundaries
+       - Replace existing values while preserving file structure
+       - Save updated unsteady flow file
+   END FOR
+```
 ### **Stage 4 — Execute Hydraulic Simulations**
 
 **Purpose**  
@@ -121,6 +129,18 @@ Each HEC-RAS project is opened and executed automatically. Simulation progress
 is monitored until completion, after which results are saved. When multiple
 projects are provided, simulations may be executed in parallel.
 
+**Pseudo-Code**
+```text
+4. Execute Hydraulic Simulations
+   FOR each HEC-RAS project file:
+       - Open project
+       - Execute current simulation plan
+       - Monitor simulation until completion
+       - Save project and results
+       - Close HEC-RAS instance
+   END FOR
+   (Simulations may be executed in parallel)
+```
 ### **Stage 5 — Extract Flow Time Series**
 
 **Purpose**  
@@ -131,6 +151,18 @@ Flow results are extracted from HEC-RAS HDF output files. Time vectors are
 constructed using simulation metadata, and results are exported for further
 analysis and visualization.
 
+**Pseudo-Code**
+```text
+5. Extract Flow Time Series
+   FOR each simulation output file:
+       - Read flow dataset from HDF output
+       - Construct time vector from simulation settings
+       - Align data lengths
+       - Generate flow plots
+       - Export flow time series to text files
+   END FOR
+```
+
 ### **Stage 6 — Extract Water Surface Elevation and Depth**
 
 **Purpose**  
@@ -139,6 +171,19 @@ Analyze hydraulic responses at selected spatial locations.
 **Description** 
 Water surface elevation is extracted for user-defined computational cells.
 Water depth is computed relative to initial conditions, enabling assessment
+
+**Pseudo-Code**
+```text
+6. Extract Water Surface Elevation and Depth
+   FOR each simulation output file:
+       - Read water surface elevation dataset
+       - Select user-defined computational cell
+       - Extract water surface time series
+       - Compute water depth relative to initial condition
+       - Generate plots
+       - Export results to text files
+   END FOR
+```
 of temporal variations in inundation depth.
 
 ### **Stage 7 — Finalization**
@@ -149,3 +194,11 @@ Ensure a clean and stable workflow termination.
 **Description** 
 All open files are closed and system resources are released, allowing the
 workflow to be repeated reliably for additional Monte Carlo realizations.
+
+**Pseudo-Code**
+```text
+7. Finalization
+   - Close all open files
+   - Release system resources
+
+END WORKFLOW
